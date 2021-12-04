@@ -1,33 +1,63 @@
 import React from 'react';
+import './App.css';
+import {Home} from './Home';
+import {About} from './About';
+import {Profile} from './Profile';
+
+const PAGES = {
+    home: <Home/>,
+    about: <About/>,
+    profile: <Profile/>
+}
 
 class App extends React.Component {
-    handleSubmit = event => {
-        event.preventDefault();
 
-        const firstName = event.target.firstName.value;
-        const lastName = event.target.lastName.value
-        console.log(firstName, lastName);
+    state = {
+        currentPage: "home"
+    }
+
+    navigateTo = (page) => {
+        this.setState({currentPage: page})
     };
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label>
-                        Name:
-                        <input name="firstName" type="text"/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Surname:
-                        <input name="lastName" type="text"/>
-                    </label>
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+            <>
+                <header>
+                    <nav>
+                        <ul>
+                            <li>
+                                <button onClick={() => {
+                                    this.navigateTo("home")
+                                }}>
+                                    Home
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={() => {
+                                    this.navigateTo("about")
+                                }}>
+                                    About
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={() => {
+                                    this.navigateTo("profile")
+                                }}>
+                                    Profile
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+                <main>
+                    <section>
+                        {PAGES[this.state.currentPage]}
+                    </section>
+                </main>
+            </>
         );
-    };
+    }
 }
 
 export default App;
